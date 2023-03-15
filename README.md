@@ -1,7 +1,9 @@
-# stm32
+# 51单片机学习
 
 #### 介绍
-stm32 学习
+51单片机 学习
+
+江科大视频链接   [b站链接](http://www.bilibili.com/video/BV1Mb411e7re/?spm_id_from=333.999.0.0)
 
 #### 软件架构
 软件架构说明
