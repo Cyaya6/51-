@@ -1,0 +1,94 @@
+C51 COMPILER V9.54   MAIN                                                                  09/27/2022 17:55:49 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include<INTRINS.H>
+   3          //延时函数
+   4          void Delay(unsigned char xms)   //@11.0592MHz
+   5          {
+   6   1        unsigned char i, j;
+   7   1      
+   8   1        while(xms--)
+   9   1        {
+  10   2          _nop_();
+  11   2        i = 2;
+  12   2        j = 199;
+  13   2        do
+  14   2        {
+  15   3          while (--j);
+  16   3        } while (--i);
+  17   2        }
+  18   1      }
+  19          
+  20          unsigned char NixieTubeNumber[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,
+  21                                          0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};  //P0口对应的LEd状态
+  22          //控制数码管点亮和P0端口的写入 实现第几个LED亮起显示哪个内容
+  23          void NixieTube(unsigned char location,unsigned char context)
+  24          {
+  25   1        switch(location)
+  26   1        {
+  27   2          case 1:
+  28   2            P2_4=0;P2_3=0;P2_2=0;break;
+  29   2          case 2:
+  30   2            P2_4=0;P2_3=0;P2_2=1;break;
+  31   2          case 3:
+  32   2            P2_4=0;P2_3=1;P2_2=0;break;
+  33   2          case 4:
+  34   2            P2_4=0;P2_3=1;P2_2=1;break;
+  35   2          case 5:
+  36   2            P2_4=1;P2_3=0;P2_2=0;break;
+  37   2          case 6:
+  38   2            P2_4=1;P2_3=0;P2_2=1;break;
+  39   2          case 7:
+  40   2            P2_4=1;P2_3=1;P2_2=0;break;
+  41   2          case 8:
+  42   2            P2_4=1;P2_3=1;P2_2=1;break;
+  43   2        }
+  44   1        P0=NixieTubeNumber[context];
+  45   1        Delay(5);
+  46   1        P0=0x00;
+  47   1      }
+  48          
+  49          //主函数
+  50          void main()
+  51          {
+  52   1        while(1)
+  53   1        {
+  54   2          /*
+C51 COMPILER V9.54   MAIN                                                                  09/27/2022 17:55:49 PAGE 2   
+
+  55   2          P2_2=1;   //通过74H138 译码器 3-8线译码器 来控制LED数码管的亮灭状态
+  56   2          P2_3=0;
+  57   2          P2_4=1;
+  58   2          
+  59   2          P0=0x5B;  //通过对P0端口的写入 来控制数码管LED显示的位置  有8个口，分别对应A-G
+  60   2          */
+  61   2          NixieTube(1,1);
+  62   2      //    Delay(20);
+  63   2          NixieTube(2,2);
+  64   2      //    Delay(20);
+  65   2          NixieTube(3,3);
+  66   2      //    Delay(20);
+  67   2        }
+  68   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    148    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,86 @@
+C51 COMPILER V9.54   MAIN                                                                  09/27/2022 20:32:13 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include<INTRINS.H>
+   3          unsigned char NixieTubeNumber[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,
+   4                                          0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};  
+   5          
+   6          void Delay(unsigned char xms)   //@11.0592MHz
+   7          {
+   8   1        unsigned char i, j;
+   9   1      
+  10   1        while(xms--)
+  11   1        {
+  12   2          _nop_();
+  13   2        i = 2;
+  14   2        j = 199;
+  15   2        do
+  16   2        {
+  17   3          while (--j);
+  18   3        } while (--i);
+  19   2        }
+  20   1      }
+  21          
+  22          //smg_show
+  23          void smg_show()
+  24          {
+  25   1        unsigned char i;
+  26   1        for(i=0;i<=8;i++)
+  27   1        {
+  28   2          switch(i)
+  29   2          {
+  30   3          case 1:
+  31   3            P2_4=0;P2_3=0;P2_2=0;break;
+  32   3          case 2:
+  33   3            P2_4=0;P2_3=0;P2_2=1;break;
+  34   3          case 3:
+  35   3            P2_4=0;P2_3=1;P2_2=0;break;
+  36   3          case 4:
+  37   3            P2_4=0;P2_3=1;P2_2=1;break;
+  38   3          case 5:
+  39   3            P2_4=1;P2_3=0;P2_2=0;break;
+  40   3          case 6:
+  41   3            P2_4=1;P2_3=0;P2_2=1;break;
+  42   3          case 7:
+  43   3            P2_4=1;P2_3=1;P2_2=0;break;
+  44   3          case 8:
+  45   3            P2_4=1;P2_3=1;P2_2=1;break;
+  46   3          }
+  47   2          P0=NixieTubeNumber[i];
+  48   2          Delay(1);
+  49   2          P0=0x00;
+  50   2        }
+  51   1      }
+  52          
+  53          //8位数码管同时显示8个字符
+  54          void main()
+C51 COMPILER V9.54   MAIN                                                                  09/27/2022 20:32:13 PAGE 2   
+
+  55          {
+  56   1        while(1)
+  57   1        {
+  58   2          smg_show();
+  59   2        }
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    138    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

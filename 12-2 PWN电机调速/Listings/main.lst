@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   MAIN                                                                  10/17/2022 20:57:57 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Key.h"
+   4          #include "Timer0.h"
+   5          #include "NixieTube.h"
+   6          sbit motor=P1^0;   //电机端口
+   7          unsigned char Counter,Compare;   //counter 0-100 指的是频率 comapre 指的是占空比 低电平时�
+             -�
+   8          unsigned char KeyNum,Speed;
+   9          void main()
+  10          {
+  11   1        Timer0Init();
+  12   1        Compare=5;
+  13   1        while(1)
+  14   1        {
+  15   2          KeyNum=Key();
+  16   2          if(KeyNum==1)
+  17   2          {
+  18   3            Speed++;
+  19   3            if(Speed>3){Speed=0;}
+  20   3            if(Speed==0){Compare=0;}   //compare 指的就是占空比 
+  21   3            if(Speed==1){Compare=50;}   //5%的占空比
+  22   3            if(Speed==2){Compare=75;}
+  23   3            if(Speed==3){Compare=100;}
+  24   3          }
+  25   2          NixieTube(8,Speed);
+  26   2        }
+  27   1      }
+  28          
+  29          void Timer0_Rourine() interrupt 1   //每隔100us进来一次
+  30          {
+  31   1        TL0 = 0xA4;   //设置定时初值
+  32   1        TH0 = 0xFF;   //设置定时初值
+  33   1        Counter++;
+  34   1        if(Counter>=100){Counter=0;}
+  35   1        if(Counter<Compare)
+  36   1        {
+  37   2          motor=1;
+  38   2        }
+  39   1        else
+  40   1        {
+  41   2          motor=0;
+  42   2        }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    108    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  10/17/2022 20:57:57 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

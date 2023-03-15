@@ -1,0 +1,65 @@
+C51 COMPILER V9.54   MATRIX_LED                                                            10/09/2022 22:32:12 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MATRIX_LED
+OBJECT MODULE PLACED IN .\Objects\Matrix_LED.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE Matrix_LED.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT
+                    -(.\Listings\Matrix_LED.lst) TABS(2) OBJECT(.\Objects\Matrix_LED.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          sbit RCK=P3^5;   //RCLK
+   5          sbit SCK=P3^6;  //SRCLK
+   6          sbit SER=P3^4;  //SER
+   7          #define MATRIX_LED_PORT P0
+   8          
+   9          /**
+  10            * @brief  向74H595中写入一个字节数据
+  11            * @param  byte 要写入的字节数据 即输出锁存位
+  12            * @retval 无
+  13            */
+  14          void _74H595_WriteByte(unsigned char byte)  //byte 就是Dpa-Dph 向八个引脚赋值 
+  15          {
+  16   1        unsigned char i;
+  17   1        for(i=0;i<8;i++)  //移出byte的每一位
+  18   1        {
+  19   2          SER=byte&(0x80>>i);  //取出byte的第八位
+  20   2          SCK=1;  //得到上升沿  0->1  移位
+  21   2          SCK=0;  //清零，为下一次移位做准备  
+  22   2        } 
+  23   1        RCK=1;   //上升沿 byte已经全部移到移位寄存器中了 可以传给输出缓存
+  24   1        RCK=0;   //清零  关闭锁存 
+  25   1      }
+  26          
+  27          /**
+  28            * @brief  选择行列，在LED点阵屏中显示
+  29            * @param  row 要选则的行 由自己写入 高电平有效  column 要选择的列 范围0-7 
+  30            * @retval 无 
+  31            */
+  32          void MatrixLed_ShowColumn(unsigned char row,unsigned char column)
+  33          {
+  34   1        _74H595_WriteByte(row);  //选择行
+  35   1        MATRIX_LED_PORT=~(0x80>>column);  //选择列
+  36   1        
+  37   1      //  if(column==0){P0=~0x80}
+  38   1      //  if(column==0){P0=~0x40}
+  39   1        Delay(1);  //延时
+  40   1        MATRIX_LED_PORT=0xFF;   //位清零   段选 位选 位清零 不断重复
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     75    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   NIXIETUBE                                                             10/15/2022 23:48:03 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE NIXIETUBE
+OBJECT MODULE PLACED IN .\Objects\NixieTube.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE NixieTube.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\NixieTube.lst) TABS(2) OBJECT(.\Objects\NixieTube.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <Delay.h>
+   3          unsigned char NixieTubeBuffer[9]={0,10,10,10,10,10,10,10,10};
+   4          unsigned char NixieTubeNumber[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,
+   5                                          0x6f,0x00,0x40};  //P0口对应的LEd状态
+   6          void NixieTube_SetBuf(unsigned char location,unsigned char context)
+   7          {
+   8   1        NixieTubeBuffer[location]=context;
+   9   1      }
+  10                                          
+  11          //控制数码管点亮和P0端口的写入 实现第几个LED亮起显示哪个内容
+  12          void NixieTube_Scan(unsigned char location,unsigned char context)
+  13          {
+  14   1        P0=0x00;
+  15   1        switch(location)
+  16   1        {
+  17   2          case 1:
+  18   2            P2_4=0;P2_3=0;P2_2=0;break;
+  19   2          case 2:
+  20   2            P2_4=0;P2_3=0;P2_2=1;break;
+  21   2          case 3:
+  22   2            P2_4=0;P2_3=1;P2_2=0;break;
+  23   2          case 4:
+  24   2            P2_4=0;P2_3=1;P2_2=1;break;
+  25   2          case 5:
+  26   2            P2_4=1;P2_3=0;P2_2=0;break;
+  27   2          case 6:
+  28   2            P2_4=1;P2_3=0;P2_2=1;break;
+  29   2          case 7:
+  30   2            P2_4=1;P2_3=1;P2_2=0;break;
+  31   2          case 8:
+  32   2            P2_4=1;P2_3=1;P2_2=1;break;
+  33   2        }
+  34   1        P0=NixieTubeNumber[context];
+  35   1        
+  36   1      }
+  37          
+  38          void Nixie_Loop()
+  39          {
+  40   1        static unsigned char i=1;
+  41   1        NixieTube_Scan(i,NixieTubeBuffer[i]);
+  42   1        i++;
+  43   1        if(i>=9){i=1;}
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    134    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     22    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   NIXIETUBE                                                             10/15/2022 23:48:03 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

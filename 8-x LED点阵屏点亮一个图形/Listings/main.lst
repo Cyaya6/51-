@@ -1,0 +1,49 @@
+C51 COMPILER V9.54   MAIN                                                                  10/09/2022 22:33:02 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Matrix_LED.h"
+   4          
+   5          sbit RCK=P3^5;   //RCLK
+   6          sbit SCK=P3^6;  //SRCLK
+   7          sbit SER=P3^4;  //SER
+   8          
+   9          void main()
+  10          {
+  11   1        SCK=0;   //串行时钟初始化
+  12   1        RCK=0;   //初始化移位寄存器时钟
+  13   1        
+  14   1        while(1)
+  15   1        {
+  16   2          MatrixLed_ShowColumn(0x80,0);
+  17   2          MatrixLed_ShowColumn(0x40,1);
+  18   2          MatrixLed_ShowColumn(0x20,2);
+  19   2          MatrixLed_ShowColumn(0x10,3);
+  20   2          MatrixLed_ShowColumn(0x08,4);
+  21   2          MatrixLed_ShowColumn(0x04,5);
+  22   2          MatrixLed_ShowColumn(0x02,6);
+  23   2          MatrixLed_ShowColumn(0x01,7);
+  24   2        }
+  25   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     62    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

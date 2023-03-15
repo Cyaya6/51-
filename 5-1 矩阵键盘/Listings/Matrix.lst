@@ -1,0 +1,152 @@
+C51 COMPILER V9.54   MATRIX                                                                09/28/2022 20:27:47 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MATRIX
+OBJECT MODULE PLACED IN .\Objects\Matrix.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE Matrix.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\Matrix.lst) TABS(2) OBJECT(.\Objects\Matrix.obj)
+
+line level    source
+
+   1          //矩阵按键
+   2          #include <REGX52.H>
+   3          #include "Delay.h"
+   4          unsigned char KeyNumber=0;
+   5          unsigned char Matrix()
+   6          {
+   7   1        
+   8   1        //按行扫描
+   9   1        P1=0xFF;  //给P1口全部置高电平
+  10   1        P1_7=0;  //第一行
+  11   1        
+  12   1        if(P1_3==0)//第一列  也就是第一个按键
+  13   1        { Delay(20);  //延时20ms
+  14   2          while(P1_3==0);  //检测松手
+  15   2          Delay(20);
+  16   2          KeyNumber=1;
+  17   2        } 
+  18   1        if(P1_2==0)//第一列  也就是第一个按键
+  19   1        { Delay(20);  //延时20ms
+  20   2          while(P1_3==0);  //检测松手
+  21   2          Delay(20);
+  22   2          KeyNumber=2;
+  23   2        } 
+  24   1        if(P1_1==0)//第一列  也就是第一个按键
+  25   1        { Delay(20);  //延时20ms
+  26   2          while(P1_3==0);  //检测松手
+  27   2          Delay(20);
+  28   2          KeyNumber=3;
+  29   2        } 
+  30   1        if(P1_0==0)//第一列  也就是第一个按键
+  31   1        { Delay(20);  //延时20ms
+  32   2          while(P1_3==0);  //检测松手
+  33   2          Delay(20);
+  34   2          KeyNumber=4;
+  35   2        } 
+  36   1        
+  37   1        //第二行
+  38   1        P1=0xFF;  //给P1口全部置高电平
+  39   1        P1_6=0;  //第一行
+  40   1        
+  41   1        if(P1_3==0)//第一列  也就是第一个按键
+  42   1        { Delay(20);  //延时20ms
+  43   2          while(P1_3==0);  //检测松手
+  44   2          Delay(20);
+  45   2          KeyNumber=5;
+  46   2        } 
+  47   1        if(P1_2==0)//第一列  也就是第一个按键
+  48   1        { Delay(20);  //延时20ms
+  49   2          while(P1_2==0);  //检测松手
+  50   2          Delay(20);
+  51   2          KeyNumber=6;
+  52   2        } 
+  53   1        if(P1_1==0)//第一列  也就是第一个按键
+  54   1        { Delay(20);  //延时20ms
+C51 COMPILER V9.54   MATRIX                                                                09/28/2022 20:27:47 PAGE 2   
+
+  55   2          while(P1_1==0);  //检测松手
+  56   2          Delay(20);
+  57   2          KeyNumber=7;
+  58   2        } 
+  59   1        if(P1_0==0)//第一列  也就是第一个按键
+  60   1        { Delay(20);  //延时20ms
+  61   2          while(P1_0==0);  //检测松手
+  62   2          Delay(20);
+  63   2          KeyNumber=8;
+  64   2        } 
+  65   1        
+  66   1        //第三行
+  67   1        P1=0xFF;  //给P1口全部置高电平
+  68   1        P1_5=0;  //第一行
+  69   1        
+  70   1        if(P1_3==0)//第一列  也就是第一个按键
+  71   1        { Delay(20);  //延时20ms
+  72   2          while(P1_3==0);  //检测松手
+  73   2          Delay(20);
+  74   2          KeyNumber=9;
+  75   2        } 
+  76   1        if(P1_2==0)//第一列  也就是第一个按键
+  77   1        { Delay(20);  //延时20ms
+  78   2          while(P1_2==0);  //检测松手
+  79   2          Delay(20);
+  80   2          KeyNumber=10;
+  81   2        } 
+  82   1        if(P1_1==0)//第一列  也就是第一个按键
+  83   1        { Delay(20);  //延时20ms
+  84   2          while(P1_1==0);  //检测松手
+  85   2          Delay(20);
+  86   2          KeyNumber=11;
+  87   2        } 
+  88   1        if(P1_0==0)//第一列  也就是第一个按键
+  89   1        { Delay(20);  //延时20ms
+  90   2          while(P1_0==0);  //检测松手
+  91   2          Delay(20);
+  92   2          KeyNumber=12;
+  93   2        } 
+  94   1        
+  95   1        //第四行
+  96   1        P1=0xFF;  //给P1口全部置高电平
+  97   1        P1_4=0;  //第一行
+  98   1        
+  99   1        if(P1_3==0)//第一列  也就是第一个按键
+ 100   1        { Delay(20);  //延时20ms
+ 101   2          while(P1_3==0);  //检测松手
+ 102   2          Delay(20);
+ 103   2          KeyNumber=13;
+ 104   2        } 
+ 105   1        if(P1_2==0)//第一列  也就是第一个按键
+ 106   1        { Delay(20);  //延时20ms
+ 107   2          while(P1_2==0);  //检测松手
+ 108   2          Delay(20);
+ 109   2          KeyNumber=14;
+ 110   2        } 
+ 111   1        if(P1_1==0)//第一列  也就是第一个按键
+ 112   1        { Delay(20);  //延时20ms
+ 113   2          while(P1_1==0);  //检测松手
+ 114   2          Delay(20);
+ 115   2          KeyNumber=15;
+ 116   2        } 
+C51 COMPILER V9.54   MATRIX                                                                09/28/2022 20:27:47 PAGE 3   
+
+ 117   1        if(P1_0==0)//第一列  也就是第一个按键
+ 118   1        { Delay(20);  //延时20ms
+ 119   2          while(P1_0==0);  //检测松手
+ 120   2          Delay(20);
+ 121   2          KeyNumber=16;
+ 122   2        } 
+ 123   1        return KeyNumber;
+ 124   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    327    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

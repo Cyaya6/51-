@@ -1,0 +1,1 @@
+"..\10-x AT24C02\Key.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Key.lst) TABS (2) OBJECT(.\Objects\Key.obj)

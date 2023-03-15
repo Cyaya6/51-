@@ -1,0 +1,76 @@
+C51 COMPILER V9.54   UART                                                                  10/08/2022 14:45:32 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Objects\Uart.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE Uart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\Uart.lst) TABS(2) OBJECT(.\Objects\Uart.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          /**
+   4            * @brief 配置串口相关的寄存器 PCON SCON  定时器1 不开启中断
+   5            * @param  无 
+   6            * @retval 无
+   7            */
+   8          void UartInit(void)   //4800bps@11.0592MHz
+   9          {
+  10   1        PCON &= 0x7F;   //波特率不倍速
+  11   1        SCON = 0x50;    //8位数据,可变波特率
+  12   1        
+  13   1        TMOD &= 0x0F;   //清除定时器1模式位
+  14   1        TMOD |= 0x20;   //设定定时器1为8位自动重装方式
+  15   1        TL1 = 0xFA;   //设定定时初值
+  16   1        TH1 = 0xFA;   //设定定时器重装值
+  17   1        
+  18   1        ET1 = 0;    //禁止定时器1中断
+  19   1        TR1 = 1;    //启动定时器1
+  20   1      }
+  21          
+  22          //自己第一遍配置的
+  23          void Uart_Init()  //配置串口相关的寄存器
+  24          {
+  25   1        SCON=0x40; 
+  26   1        PCON &= 0x7F;
+  27   1        
+  28   1        //配置定时器1
+  29   1        TMOD&=0x0F;   //高四位清零
+  30   1        TMOD|=0x20;   //配置定时器1的模式  
+  31   1        TL1 = 0xFA;   //设定定时初值
+  32   1        TH1 = 0xFA;   //设定定时器重装值
+  33   1        
+  34   1        ET1 = 0;    //禁止定时器1中断  由于这里不需要用到中断所以，没有配置中断有关的
+             -寄存器
+  35   1        TR1 = 1;    //启动定时器1
+  36   1      }
+  37          
+  38          /**
+  39            * @brief 向串口写入一个字节的数据
+  40            * @param  byte 一个字节
+  41            * @retval 无
+  42            */
+  43          void UartSendByte(unsigned char byte)
+  44          {
+  45   1        //写入数据，只需要向SBUF中写入数据就可以了
+  46   1        SBUF=byte;
+  47   1        while(TI==0);  //TI用来判断是否由硬件置1
+  48   1        TI=0;  //发送数据发完了，用软件置0
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     54    ----
+C51 COMPILER V9.54   UART                                                                  10/08/2022 14:45:32 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,82 @@
+C51 COMPILER V9.54   MAIN                                                                  09/29/2022 18:50:00 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\learning_51\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "LCD1602.h"
+   4          #include "Matrix.h"
+   5          
+   6          unsigned char KeyNum;  //按下矩阵键盘返回的数值 如按下s1返回1
+   7          unsigned int PassWord=0,count=0;
+   8          void main()
+   9          {
+  10   1        LCD_Init(); //初始化LCD
+  11   1        LCD_ShowString(1,1,"PassWord");
+  12   1        while(1)
+  13   1        {
+  14   2          KeyNum=Matrix();
+  15   2          if(KeyNum)
+  16   2          {
+  17   3            if(KeyNum<=10)  //密码区 s1-s10为输入密码区
+  18   3            {
+  19   4              if(count<4)  //如果输入次数小于4
+  20   4              {
+  21   5              PassWord*=10;     //密码左移一位
+  22   5              PassWord+=KeyNum%10;   //1-9 对10取余 还是1-9 10取余 就是1 
+  23   5              //就是让密码不断左移
+  24   5              count++;  //每一次移位后计数
+  25   5              }
+  26   4              
+  27   4              LCD_ShowNum(2,1,PassWord,4);   //在LCD上显示密码  更新显示
+  28   4            }
+  29   3           
+  30   3            if(KeyNum==11)   //如果按下s11 确认密码
+  31   3            {
+  32   4              if(PassWord==1234)
+  33   4              {
+  34   5                LCD_ShowString(1,12,"  OK!");  //输入正确
+  35   5                PassWord=0;  //清除密码
+  36   5                count=0;    //清除计数
+  37   5                LCD_ShowNum(2,1,PassWord,4);   //更新显示
+  38   5              }
+  39   4              else
+  40   4              {
+  41   5                LCD_ShowString(1,12,"ERROR");
+  42   5                PassWord=0;  //清除密码
+  43   5                count=0;    //清除计数
+  44   5                LCD_ShowNum(2,1,PassWord,4);   //更新显示
+  45   5              }
+  46   4            }
+  47   3            
+  48   3            if(KeyNum==12)   //按下按键s12 取消键  按位取消  例如1234 ->0123
+  49   3            {
+  50   4                PassWord/=10;  //清除密码
+  51   4                count--;    //清除计数
+  52   4                LCD_ShowNum(2,1,PassWord,4);   //更新显示
+  53   4            }
+  54   3          } 
+C51 COMPILER V9.54   MAIN                                                                  09/29/2022 18:50:00 PAGE 2   
+
+  55   2        }
+  56   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    203    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
